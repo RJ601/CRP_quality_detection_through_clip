@@ -109,3 +109,6 @@ The final model combines CLIP RN50 with the original three-stream interaction fr
 * Pillow
 * numpy
 * scikit-learn
+
+## Link to Dataset
+https://drive.google.com/drive/folders/1zz13y12S0q_XlhAWfdOyEu8Pu1PKj1mF
