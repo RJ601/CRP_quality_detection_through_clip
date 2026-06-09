@@ -23,18 +23,21 @@ We extend the multi-stream architecture of [Wu et al. (PLOS One, 2026)](https://
 
 ---
 
-## Results at a Glance
+## Resnet50 (Original Baseline)
 
-| Model | Test Acc (iPhone) | Vivo Acc | Xiaomi Acc |
-|---|---|---|---|
-| **CLIP-Interact (ours)** | **98.33%** | **92.0%** | 75.8% |
-| Baseline (ResNet50) | 97.08% | 78.6% | **86.8%** |
+The `Original/` directory contains our reimplementation of the original paper's architecture. The model uses a three-stream ResNet50 design with channel-level feature interaction between full, black-background, and white-background image streams. This implementation served as the baseline for all subsequent experiments.
 
-> CLIP-RN50 achieves **+13.4% improvement on Vivo** simulated images — reflecting stronger robustness to mild domain shift from CLIP's large-scale pretraining.
+## CLIP Vision Transformer (Experimental)
+
+We replaced the ResNet50 backbone with CLIP Vision Transformers and evaluated multiple variants including ViT-B/32, ViT-B/16, and ViT-L/14. A lightweight linear classification head was trained on top of frozen CLIP features, with and without dropout regularization.
+
+The best-performing configuration was ViT-L/14 with a linear layer and dropout, achieving approximately 73% test accuracy.
+
+Performance was limited by the relatively small dataset size of approximately 400 images. Although the CLIP encoder remained frozen, a noticeable train-test gap persisted. Additionally, Vision Transformers process images as patch sequences, which reduced the effectiveness of the channel interaction mechanism used in the original three-stream architecture.
 
 ---
 
-## Architecture
+## CLIP-RN50 (Main Architecture)
 
 Three parallel CLIP-RN50 branches process complementary views of the same CRP specimen:
 
@@ -68,6 +71,16 @@ Domain shift for Vivo and Xiaomi was **simulated** via brightness, sharpness, co
 
 <img width="2480" height="900" alt="Peel_Images_Diff_Devices" src="https://github.com/user-attachments/assets/afc8300e-dc6c-4a1e-a185-8b148eee3037" />
 
+---
+
+## Results at a Glance
+
+| Model | Test Acc (iPhone) | Vivo Acc | Xiaomi Acc |
+|---|---|---|---|
+| **CLIP-Interact (ours)** | **98.33%** | **92.0%** | 75.8% |
+| Baseline (ResNet50) | 97.08% | 78.6% | **86.8%** |
+
+> CLIP-RN50 achieves **+13.4% improvement on Vivo** simulated images — reflecting stronger robustness to mild domain shift from CLIP's large-scale pretraining.
 
 ---
 
@@ -172,6 +185,11 @@ The reasons for this CLIP-RN50’s exceptionally degraded performance on the xia
 The networks could also be tested and compared on actual instead of simulated images of CRP taken from different specification cameras to give results more aligned with real-life use-cases.
 
 In addition to this, we could make this research more generalizable by adding diverse data of different classes, hence extending its ability to detect quality for a wide variety of fruits and vegetables. By using a larger dataset, we can also see the CLIP ViT’s full capacity as it performs the best with big amounts of data, so we don’t limit its classification ability that the dataset used in this study did.
+
+---
+
+## Link to Dataset
+https://drive.google.com/drive/folders/1zz13y12S0q_XlhAWfdOyEu8Pu1PKj1mF
 
 ---
 
