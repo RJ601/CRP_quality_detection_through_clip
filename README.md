@@ -23,6 +23,27 @@ We extend the multi-stream architecture of [Wu et al. (PLOS One, 2026)](https://
 
 ---
 
+## Project Structure
+
+```text
+├── clip_resnet/
+│   ├── dataload.py
+│   ├── model_clip.py
+│   └── main_clip.ipynb
+├── clip_vit/
+│   ├── dataload.py
+│   ├── clip_vit.py
+│   └── clip_vit_L_14_main.ipynb
+├── Original/
+│   ├── dataload.py
+│   ├── models.py
+│   └── main.ipynb
+├── app.py
+└── README.md
+```
+
+---
+
 ## Resnet50 (Original Baseline)
 
 The `Original/` directory contains our reimplementation of the original paper's architecture. The model uses a three-stream ResNet50 design with channel-level feature interaction between full, black-background, and white-background image streams. This implementation served as the baseline for all subsequent experiments.
@@ -84,26 +105,6 @@ Domain shift for Vivo and Xiaomi was **simulated** via brightness, sharpness, co
 
 ---
 
-## Project Structure
-
-```text
-├── clip_resnet/
-│   ├── dataload.py
-│   ├── model_clip.py
-│   └── main_clip.ipynb
-├── clip_vit/
-│   ├── dataload.py
-│   ├── clip_vit.py
-│   └── clip_vit_L_14_main.ipynb
-├── Original/
-│   ├── dataload.py
-│   ├── models.py
-│   └── main.ipynb
-├── app.py
-└── README.md
-```
-
----
 
 ## Setup
 
