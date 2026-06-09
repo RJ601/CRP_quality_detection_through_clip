@@ -204,6 +204,7 @@ Radford A et al. (2021). *Learning Transferable Visual Models From Natural Langu
 <div align="center">
 
 Made by **Javeria Rahman (23i-0137) & Shireen Fatima (23i-0130)** 
+
 BS Artificial Intelligence · NUCES Islamabad · Instructor: Sir Ishtiaq
 
 </div>
