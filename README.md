@@ -38,6 +38,8 @@ We extend the multi-stream architecture of [Wu et al. (PLOS One, 2026)](https://
 
 Three parallel CLIP-RN50 branches process complementary views of the same CRP specimen:
 
+<img width="1200" height="940" alt="clip_architecture" src="https://github.com/user-attachments/assets/9b7188d7-420b-49bd-bb4b-1234c21cd1d1" />
+
 ```
 Full Image ──────┐
                  ├── [Stem → Layer1 → Layer2] ──── Feature Interaction ──── [Layer3 → Layer4] ──► Aux Head
@@ -78,16 +80,27 @@ Each specimen provides **three images**: a full image (whole peel, exocarp side 
 
 Domain shift for Vivo and Xiaomi was **simulated** via brightness, sharpness, contrast, and noise augmentation since those device images were unavailable.
 
+<img width="2480" height="900" alt="Peel_Images_Diff_Devices" src="https://github.com/user-attachments/assets/afc8300e-dc6c-4a1e-a185-8b148eee3037" />
+
+
 ---
 
 ## Project Structure
 
-```
-.
-├── model_clip.py          # CLIPCombinedInteractModel — full architecture
-├── app.py                 # Streamlit frontend
-├── main2.ipynb            # Training, evaluation, cross-device experiments
-├── best_model_seed_242.pt # Trained weights (not tracked by git — add separately)
+```text
+├── clip_resnet/
+│   ├── dataload.py
+│   ├── model_clip.py
+│   └── main_clip.ipynb
+├── clip_vit/
+│   ├── dataload.py
+│   ├── clip_vit.py
+│   └── clip_vit_L_14_main.ipynb
+├── Original/
+│   ├── dataload.py
+│   ├── models.py
+│   └── main.ipynb
+├── app.py
 └── README.md
 ```
 
@@ -133,7 +146,7 @@ Once all three are uploaded, click **Run Inference** to get the predicted class 
 
 ## Training
 
-Open `main2.ipynb` in Jupyter/Colab. The notebook covers:
+Open `main_clip.ipynb` in Jupyter/Colab. The notebook covers:
 
 - Dataset loading (full / black / white streams)
 - Training loop with auxiliary loss
@@ -163,6 +176,16 @@ Training config used: Adam optimizer · lr=1e-4 · cosine annealing · 30 epochs
 - **Xiaomi performance** is consistently lower for CLIP-RN50 (75.8%) vs baseline (86.8%). Our hypothesis: CLIP's texture-sensitive filters are disproportionately hurt by the aggressive Xiaomi augmentation (sharpness 1.8, noise std=8). Exact cause is an open question — real Xiaomi images would help confirm.
 - Only 4 CRP classes. Generalization to other price points or fruit varieties untested.
 - Domain shift results are based on simulated images, not actual multi-device captures.
+
+---
+
+## Future Work
+
+The reasons for this CLIP-RN50’s exceptionally degraded performance on the xiaomi might be the drastic augmentations but when compared to performance of the original network, the difference is still not understood and could be studied using explainable AI to improve the network. 
+
+The networks could also be tested and compared on actual instead of simulated images of CRP taken from different specification cameras to give results more aligned with real-life use-cases.
+
+In addition to this, we could make this research more generalizable by adding diverse data of different classes, hence extending its ability to detect quality for a wide variety of fruits and vegetables. By using a larger dataset, we can also see the CLIP ViT’s full capacity as it performs the best with big amounts of data, so we don’t limit its classification ability that the dataset used in this study did.
 
 ---
 
