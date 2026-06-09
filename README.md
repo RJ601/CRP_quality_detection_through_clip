@@ -40,20 +40,6 @@ Three parallel CLIP-RN50 branches process complementary views of the same CRP sp
 
 <img width="1200" height="940" alt="clip_architecture" src="https://github.com/user-attachments/assets/9b7188d7-420b-49bd-bb4b-1234c21cd1d1" />
 
-```
-Full Image ──────┐
-                 ├── [Stem → Layer1 → Layer2] ──── Feature Interaction ──── [Layer3 → Layer4] ──► Aux Head
-Black Patch ─────┤                                        ↕ 10%/5%                                   │
-                 └── (same structure × 3)           cross-branch channel                             │
-White Patch ─────┘                                      exchange                                     │
-                                                                                              Concatenate
-                                                                                             (B, 1536)
-                                                                                                  │
-                                                                                           Main Classifier
-                                                                                                  │
-                                                                                              Softmax → 4 classes
-```
-
 **Key design choices:**
 
 - **Backbone**: CLIP-RN50 (pretrained on 400M image-text pairs). Uses CLIP's 3-conv stem + avgpool instead of standard single conv + maxpool.
